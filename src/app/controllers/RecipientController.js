@@ -37,7 +37,7 @@ class RecipientController {
       return res.status(400).json({ erro: 'Falha na validação!' });
     }
 
-    const recipient = await Recipient.findByPk(req.body.id);
+    const recipient = await Recipient.findByPk(req.params.id);
 
     const up = await recipient.update(req.body)
 

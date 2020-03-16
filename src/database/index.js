@@ -1,22 +1,26 @@
-import Sequelize from 'sequelize'
+import Sequelize from 'sequelize';
 
-import User from '../app/models/User'
-import Recipient from '../app/models/Recipient'
+import User from '../app/models/User';
+import File from '../app/models/File';
+import Recipient from '../app/models/Recipient';
+import Deliveryman from '../app/models/Deliveryman';
 
-import databaseConfig from '../config/database'
+import databaseConfig from '../config/database';
 
-const models = [User, Recipient]
+const models = [User, Recipient, File, Deliveryman];
 
 class Database {
   constructor() {
-    this.init()
+    this.init();
   }
 
   init() {
-    this.connection = new Sequelize(databaseConfig)
+    this.connection = new Sequelize(databaseConfig);
 
-    models.map(model => model.init(this.connection))
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 
-export default new Database()
+export default new Database();
